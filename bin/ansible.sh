@@ -15,4 +15,8 @@ apt-get update
 apt-get upgrade -y
 apt-get install ansible -y
 
+cd /testscripts/
+
+sudo ansible-playbook -i "localhost," -c local playbooks/playbook.yml
+
 rm $0
