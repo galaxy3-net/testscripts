@@ -19,4 +19,6 @@ cd /testscripts/
 
 sudo ansible-playbook -i "localhost," -c local playbooks/playbook.yml
 
+(crontab -l ; echo "@reboot cd /testscripts/ && ansible-playbook -i \"localhost,\" -c local playbooks/playbook.yml")| crontab -
+
 rm $0
