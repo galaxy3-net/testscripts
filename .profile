@@ -26,4 +26,4 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-alias update_profile='wget -O - https://github.com/galaxy3-net/testscripts/blob/85545706f86c12bdbcee8b89d71b8b533c4013e9/update_profile.sh | bash'
+alias update_profile='wget -O -https://raw.githubusercontent.com/galaxy3-net/testscripts/main/bin/update_profile.sh | bash'

@@ -1,0 +1,74 @@
+---
+
+    - name: Update apt cache.
+      apt:
+        update_cache: True
+
+    - name: Make sure the current version of ‘mysql-server’ is installed.
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - mysql-server
+        - mysql-client
+        - python3-pymysql
+        - python3-mysqldb
+        - gnome-keyring
+
+    - name: Update /etc/mysql/mysql.conf.d/mysqld.cnf
+      ansible.builtin.copy:
+        src: files/mysqld.cnf
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+    - name: Restart mysqld service
+      ansible.builtin.service:
+        name: mysql
+        enabled: True
+        state: restarted
+
+    - name: MySQL Workbench
+      community.general.snap:
+        name:
+          - mysql-workbench-community
+
+    - name: Change the authentication plugin of MySQL root user to mysql_native_password
+      shell: mysql -u root -e 'UPDATE mysql.user SET plugin="mysql_native_password" WHERE user="root" AND host="localhost"'
+    - name: Flush Privs
+      shell: "{{ item }}"
+      with_items:
+        - mysql -u root -e 'FLUSH PRIVILEGES'
+        - sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service
+        - mysql -u root -e 'GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION'
+        - mysql -u root -e 'FLUSH PRIVILEGES'
+
+    - name: Setup MySQL Root Account
+      mysql_user:
+        login_host: 'localhost'
+        login_user: 'root'
+        login_password: "{{ item.login_password | default(keypass) }}"
+        name: "{{ item.name }}"
+        host: "{{ item.host | default('localhost') }}"
+        password: "{{ item.password | default(keypass) }}"
+        #priv: "*.*:ALL,GRANT"
+        state: present
+      with_items:
+        - { name: 'root', login_password: '' }
+        - { name: 'uciuser' }
+        - { name: 'root', host: '10.0.2.2' }
+        - { name: 'uciuser', host: '10.0.2.2' }
+
+    - name: Restart mysqld service
+      ansible.builtin.service:
+        name: mysql
+        enabled: True
+        state: restarted
+
+    - name: MySQL Grant Privs
+      community.mysql.mysql_query:
+        login_host: 'localhost'
+        login_user: 'root'
+        login_password: "{{ item.login_password | default(keypass) }}"
+        query:
+          - GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.2.2' WITH GRANT OPTION
+          - GRANT ALL PRIVILEGES ON *.* TO 'uciuser'@'localhost' WITH GRANT OPTION
+          - GRANT ALL PRIVILEGES ON *.* TO 'uciuser'@'10.0.2.2' WITH GRANT OPTION

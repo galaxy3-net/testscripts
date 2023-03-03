@@ -1,0 +1,86 @@
+---
+
+    - name: Update apt cache.
+      apt:
+        update_cache: True
+
+    - name: Make sure the current version of xfce4 is installed.
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - xfce4
+        - xfce4-goodies
+
+    - name: Make sure the current version of tightvncserver is installed.
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - tightvncserver
+        - dos2unix
+
+    - name: Create a .vnc directory if it does not exist
+      ansible.builtin.file:
+        path: /home/vagrant/.vnc
+        owner: vagrant
+        group: vagrant
+        state: directory
+        mode: '0700'
+
+    - name: Update set_vnc_passwd.sh
+      ansible.builtin.copy:
+        src: files/set_vnc_password.sh
+        dest: /home/vagrant/.vnc/set_vnc_password.sh
+        group: vagrant
+        owner: vagrant
+        mode: 0700
+
+    - name: dos2unix
+      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
+
+    - name: Set VNC Password
+      shell: /home/vagrant/.vnc/set_vnc_password.sh "{{ keypass }}"
+
+    - name: Start VNC Server
+      shell: vncserver
+
+    - name: Stop VNC Server
+      shell: vncserver  -kill :1
+
+    - name: Update /home/vagrant/.vnc/xstartup
+      ansible.builtin.copy:
+        src: files/xstartup
+        dest: /home/vagrant/.vnc/xstartup
+        group: vagrant
+        owner: vagrant
+        mode: 0700
+
+    - name: Start VNC Server
+      shell: vncserver
+
+ #   - name: Restart mysqld service
+ #     ansible.builtin.service:
+ #       name: mysql
+ #       enabled: True
+ #       state: restarted
+
+#    - name: MySQL Workbench
+#      community.general.snap:
+#        name:
+#          - mysql-workbench-community
+
+#    - name: Change the authentication plugin of MySQL root user to mysql_native_password
+#      shell: mysql -u root -e 'UPDATE mysql.user SET plugin="mysql_native_password" WHERE user="root" AND host="localhost"'
+#    - name: Flush Privs
+#      shell: mysql -u root -e 'FLUSH PRIVILEGES'
+
+#    - name: Setup MySQL Root Account
+#      mysql_user:
+#        login_host: 'localhost'
+#        login_user: 'root'
+#        login_password: ''
+#        name: 'root'
+#        password: 'uci2020'
+#        state: present
+
