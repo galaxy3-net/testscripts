@@ -15,4 +15,4 @@ apt-get update
 apt-get upgrade -y
 apt-get install ansible -y
 
--f /etc/rc3.d/S02ansible && sudo rm /etc/rc3.d/S02ansible
+rm $0
