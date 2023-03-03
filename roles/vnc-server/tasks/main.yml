@@ -58,6 +58,7 @@
 
     - name: Start VNC Server
       shell: vncserver
+      become_user: vagrant
 
  #   - name: Restart mysqld service
  #     ansible.builtin.service:
