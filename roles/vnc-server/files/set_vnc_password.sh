@@ -3,7 +3,7 @@
 myuser="${1}"
 mypasswd="${2:=uci2020!}"
 
-sudo -u "${myuser}" echo "${mypasswd}" | vncpasswd -f > /home/vagrant/.vnc/passwd
+sudo -u "${myuser}" echo "${mypasswd}" | vncpasswd -f > /home/${myuser}/.vnc/passwd
 
-#chown vagrant: /home/vagrant/.vnc/passwd
-#chmod 0600 /home/vagrant/.vnc/passwd
+chown ${myuser}: /home/${myuser}/.vnc/passwd
+chmod 0600 /home/${myuser}/.vnc/passwd
