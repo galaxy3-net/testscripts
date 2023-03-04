@@ -8,4 +8,4 @@
   roles:
     - role: 'roles/common'
     - role: 'roles/vnc-server'
-    - role: 'roles/mysql-server'
+#    - role: 'roles/mysql-server'
