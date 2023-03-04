@@ -18,5 +18,7 @@
   ansible.builtin.git:
     repo: https://github.com/galaxy3-net/testscripts.git
     dest: /testscripts/
+    user: vagrant
+    group: vagrant
     clone: no
     update: yes
