@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+function install_ansible ()
+{
+  apt-get update
+  apt-get upgrade -y
+  apt-get install ansible -y
+}
 cat <<_EOD_
 
   Installing Ansible
@@ -21,9 +28,7 @@ test -e /etc/motd && rm /etc/motd
 exec 2>&1
 exec > /tmp/ansibile_install.log
 
-apt-get update
-apt-get upgrade -y
-apt-get install ansible -y
+which ansible-playbook || install_ansible
 
 cd /testscripts/
 
