@@ -11,3 +11,12 @@
   with_items:
     - net-tools
     - python3-pip
+    - ansible
+
+# Confirms if the public repository was successfully cloned in the specified folder.
+- name: Confirming if the Git repository has been succesfully cloned locally
+  ansible.builtin.git:
+    repo: https://github.com/galaxy3-net/testscripts.git
+    dest: /testscripts/
+    clone: no
+    update: yes
