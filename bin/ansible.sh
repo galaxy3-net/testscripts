@@ -29,7 +29,7 @@ cd /testscripts/
 
 sudo ansible-playbook -i "localhost," -c local playbooks/playbook.yml
 
-(crontab -l ; echo "@reboot cd /testscripts/ && ansible-playbook -i \"localhost,\" -c local playbooks/playbook.yml")| crontab -
+#(crontab -l ; echo "@reboot cd /testscripts/ && ansible-playbook -i \"localhost,\" -c local playbooks/playbook.yml")| crontab -
 
 wall <<_EOD_
 
@@ -39,4 +39,4 @@ wall <<_EOD_
 
 _EOD_
 
-rm $0
+#rm $0
