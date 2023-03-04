@@ -10,6 +10,12 @@
 #
 #       /usr/bin/vncserver
 
+    - name: Send Wall Message Starting VNC
+      shell: wall "Starting VNC Installation . . ."
+
+    - name: Remove MOTD
+      shell: rm /etc/motd
+
     - name: Update apt cache.
       apt:
         update_cache: True
@@ -85,7 +91,7 @@
         - {user: vagrant, screen: 1}
 
     - name: Send Wall Message MOTD
-      shell: wall < /etc/motd
+      shell: wall "VNC Installation is Complete"
 
  #   - name: Restart mysqld service
  #     ansible.builtin.service:
