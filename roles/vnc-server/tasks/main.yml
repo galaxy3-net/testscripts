@@ -84,6 +84,9 @@
       with_items:
         - {user: vagrant, screen: 1}
 
+    - name: Send Wall Message MOTD
+      shell: wall < /etc/motd
+
  #   - name: Restart mysqld service
  #     ansible.builtin.service:
  #       name: mysql
