@@ -1,5 +1,15 @@
 ---
 
+#         vncserver  [:display]  [-geometry  widthxheight]  [-depth depth] [-pix‐
+#       elformat rgbNNN|bgrNNN] [-name desktop-name] [ -httpport int ] [ -base‐
+#       httpport int ] [ -alwaysshared ] [ -nevershared ] [Xvnc-options...]
+#
+#       vncserver [ -clean ] -kill :display
+#
+#       vncserver -help
+#
+#       /usr/bin/vncserver
+
     - name: Update apt cache.
       apt:
         update_cache: True
@@ -28,37 +38,51 @@
         state: directory
         mode: '0700'
 
+#    - name: Update set_vnc_passwd.sh
+#      ansible.builtin.copy:
+#        src: files/set_vnc_password.sh
+#        dest: /home/vagrant/.vnc/set_vnc_password.sh
+#        group: vagrant
+#        owner: vagrant
+#        mode: 0700
+
     - name: Update set_vnc_passwd.sh
       ansible.builtin.copy:
         src: files/set_vnc_password.sh
-        dest: /home/vagrant/.vnc/set_vnc_password.sh
-        group: vagrant
-        owner: vagrant
-        mode: 0700
+        dest: /usr/local/bin/set_vnc_password.sh
+        group: root
+        owner: root
+        mode: 0777
 
-    - name: dos2unix
-      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
+#    - name: dos2unix
+#      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
 
     - name: Set VNC Password
-      shell: /home/vagrant/.vnc/set_vnc_password.sh "{{ keypass }}"
+      shell: /home/vagrant/.vnc/set_vnc_password.sh "{{ item }}" "{{ keypass }}"
+      ignore_errors: True
+      with_items:
+        - vagrant
 
-    - name: Start VNC Server
-      shell: vncserver
+#    - name: Start VNC Server
+#      shell: vncserver
 
-    - name: Stop VNC Server
-      shell: vncserver  -kill :1
+#    - name: Stop VNC Server
+#      shell: vncserver  -kill :1
 
     - name: Update /home/vagrant/.vnc/xstartup
       ansible.builtin.copy:
         src: files/xstartup
         dest: /home/vagrant/.vnc/xstartup
-        group: vagrant
-        owner: vagrant
+        group: "{{ item }}"
+        owner: "{{ item }}"
         mode: 0700
+      with_items:
+        - vagrant
 
     - name: Start VNC Server
-      shell: vncserver
-      become_user: vagrant
+        shell: /usr/local/bin/vncserver "{{ item.user }}" "{{ item.screen }}"
+      with_items:
+        - {user: vagrant, screen: 1}
 
  #   - name: Restart mysqld service
  #     ansible.builtin.service:

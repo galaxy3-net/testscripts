@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+export myuser=${1}
+export myscreen=${2}
+
+sudo -u ${myuser}  vncserver  -kill :${myscreen}
+
+sudo -u ${myuser} /usr/bin/vncserver :${myscreen} -name "${myuser}Desktop"
