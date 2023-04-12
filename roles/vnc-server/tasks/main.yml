@@ -86,7 +86,7 @@
         - vagrant
 
     - name: Start VNC Server
-      shell: /usr/local/bin/vncserver "{{ item.user }}" "{{ item.screen }}"
+      shell: vncserver "{{ item.user }}" "{{ item.screen }}"
       with_items:
         - {user: vagrant, screen: 1}
 
