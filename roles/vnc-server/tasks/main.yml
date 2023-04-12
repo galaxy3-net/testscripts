@@ -86,7 +86,9 @@
         - vagrant
 
     - name: Start VNC Server
-      shell: vncserver "{{ item.user }}" "{{ item.screen }}"
+      shell: vncserver ":{{ item.screen }}"
+      become: yes
+      become_user: vagrant
       with_items:
         - {user: vagrant, screen: 1}
 
