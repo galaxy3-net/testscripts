@@ -2,7 +2,8 @@
 
 
 sudo git clone https://github.com/galaxy3-net/testscripts.git /testscripts/
+sudo chown -R vagrant:vagrant /testscripts/
 cd /testscripts
-sudo git pull
+git pull
 
-sudo . /testscripts/bin/ansible.sh
+. /testscripts/bin/ansible.sh
