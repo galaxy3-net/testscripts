@@ -5,7 +5,7 @@ function install_ansible ()
 {
   apt-get update
   apt-get upgrade -y
-  apt-get install ansible -y
+  apt-get install ansible-core -y
 }
 cat <<_EOD_
 
