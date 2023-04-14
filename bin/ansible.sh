@@ -32,7 +32,7 @@ which ansible-playbook || install_ansible
 
 cd /testscripts/
 
-ansible-playbook -i "localhost," -c local playbooks/playbook.yml
+sudo ansible-playbook -i "localhost," -c local playbooks/playbook.yml
 
 #(crontab -l ; echo "@reboot cd /testscripts/ && ansible-playbook -i \"localhost,\" -c local playbooks/playbook.yml")| crontab -
 
