@@ -20,12 +20,14 @@
       apt:
         update_cache: True
       become: yes
+      become_user: root
 
     - name: Make sure the current version of xfce4 is installed.
       apt:
         name: "{{ item }}"
         state: latest
       become: yes
+      become_user: root
       with_items:
         - xfce4
         - xfce4-goodies
@@ -35,6 +37,7 @@
         name: "{{ item }}"
         state: latest
       become: yes
+      become_user: root
       with_items:
         - tightvncserver
         - dos2unix
@@ -45,6 +48,7 @@
         comment: "Sysadmin User"
         uid: 1000
       become: yes
+      become_user: root
 
     - name: Create a .vnc directory if it does not exist
       ansible.builtin.file:
