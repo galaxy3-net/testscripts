@@ -36,6 +36,12 @@
         - tightvncserver
         - dos2unix
 
+    - name: Create Users
+      user:
+        name: sysadmin
+        comment: "Sysadmin User"
+        uid: 1000
+
     - name: Create a .vnc directory if it does not exist
       ansible.builtin.file:
         path: /home/vagrant/.vnc
