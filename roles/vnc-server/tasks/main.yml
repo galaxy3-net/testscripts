@@ -19,8 +19,8 @@
     - name: Create User List
       set_fact:
         Users:
-          - vagrant
-          - sysadmin
+          - { name=vagrant }
+          - { name=sysadmin }
 
     - name: Update apt cache.
       apt:
