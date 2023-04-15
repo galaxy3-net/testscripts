@@ -46,7 +46,6 @@
       user:
         name: sysadmin
         comment: "Sysadmin User"
-        uid: 1000
       become: yes
       become_user: root
 
