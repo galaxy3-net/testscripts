@@ -19,8 +19,8 @@
     - name: Create User List
       set_fact:
         Users:
-          - { name: vagrant }
-          - { name: sysadmin }
+          - {user: vagrant}
+          - {user: sysadmin}
 
     - name: Update apt cache.
       apt:
@@ -57,13 +57,13 @@
 
     - name: Create a .vnc directory if it does not exist
       ansible.builtin.file:
-        path: /home/{{ item }}/.vnc
-        owner: "{{ item.name }}"
-        group: "{{ item.name }}"
+        path: /home/{{ item.user }}/.vnc
+        owner: "{{ item.user }}"
+        group: "{{ item.user }}"
         state: directory
         mode: '0700'
       become: yes
-      become_user: "{{ item.name }}"
+      become_user: "{{ item.user }}"
       with_items:
         "{{ Users }}"
 
