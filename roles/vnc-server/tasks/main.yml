@@ -62,7 +62,7 @@
       become: yes
       become_user: "{{ item }}"
       with_items:
-        Users
+        "{{ Users }}"
 
 #    - name: Update set_vnc_passwd.sh
 #      ansible.builtin.copy:
