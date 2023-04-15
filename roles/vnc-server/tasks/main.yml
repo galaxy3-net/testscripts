@@ -60,6 +60,7 @@
       become_user: "{{ item }}"
       with_items:
         - vagrant
+        - sysadmin
 
 #    - name: Update set_vnc_passwd.sh
 #      ansible.builtin.copy:
