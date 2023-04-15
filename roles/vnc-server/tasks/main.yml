@@ -52,12 +52,14 @@
     - name: Create a .vnc directory if it does not exist
       ansible.builtin.file:
         path: /home/vagrant/.vnc
-        owner: vagrant
-        group: vagrant
+        owner: "{{ item }}"
+        group: "{{ item }}"
         state: directory
         mode: '0700'
       become: yes
-      become_user: vagrant
+      become_user: "{{ item }}"
+      with_items:
+        - vagrant
 
 #    - name: Update set_vnc_passwd.sh
 #      ansible.builtin.copy:
