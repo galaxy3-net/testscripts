@@ -19,8 +19,8 @@
     - name: Create User List
       set_fact:
         Users:
-          - {user: vagrant}
-          - {user: sysadmin}
+          - {user: vagrant, screen: 1}
+          - {user: sysadmin, screen: 2}
 
     - name: Update apt cache.
       apt:
@@ -116,7 +116,7 @@
       become: yes
       become_user: "{{ item.user }}"
       with_items:
-        - {user: vagrant, screen: 1}
+        - "{{ Users }}"
 
 #    - name: Send Wall Message MOTD
 #      shell: wall "VNC Installation is Complete"
