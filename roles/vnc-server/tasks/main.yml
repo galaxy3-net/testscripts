@@ -115,6 +115,7 @@
       shell: vncserver ":{{ item.screen }}"
       become: yes
       become_user: "{{ item.user }}"
+      ignore_errors: True
       with_items:
         - "{{ Users }}"
 
