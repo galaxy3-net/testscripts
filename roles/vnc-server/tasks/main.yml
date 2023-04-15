@@ -16,6 +16,9 @@
 #    - name: Remove MOTD
 #      shell: rm /etc/motd
 
+    - name: Create User List
+      set_fact:
+        Users: ["vagrant","sysadmin"]
     - name: Update apt cache.
       apt:
         update_cache: True
@@ -59,8 +62,7 @@
       become: yes
       become_user: "{{ item }}"
       with_items:
-        - vagrant
-        - sysadmin
+        Users
 
 #    - name: Update set_vnc_passwd.sh
 #      ansible.builtin.copy:
