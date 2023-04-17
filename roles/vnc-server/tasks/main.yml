@@ -98,7 +98,7 @@
 #      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
 
     - name: Set VNC Password
-      shell: /usr/local/bin/set_vnc_password.sh "{{ item.user }}"
+      shell: /usr/local/bin/set_vnc_password.sh "{{ item.user }}" "uci2020"
       ignore_errors: True
       become: yes
       become_user: "{{ item.user }}"
