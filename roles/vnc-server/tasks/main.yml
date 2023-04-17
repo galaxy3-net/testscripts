@@ -20,7 +20,14 @@
       set_fact:
         Users:
           - {user: vagrant, screen: 1}
-          - {user: sysadmin, screen: 2}
+          - {user: instructor, screen: 2}
+          - {user: student, screen: 3}
+          - {user: sysadmin, screen: 4}
+        apt-packages:
+          - xfce4
+          - xfce4-goodies
+          - tightvncserver
+          - dos2unix
 
     - name: Update apt cache.
       apt:
@@ -28,15 +35,17 @@
       become: yes
       become_user: root
 
-    - name: Make sure the current version of xfce4 is installed.
-      apt:
-        name: "{{ item }}"
-        state: latest
-      become: yes
-      become_user: root
-      with_items:
-        - xfce4
-        - xfce4-goodies
+ #   - name: Make sure the current version of xfce4 is installed.
+ #     apt:
+ #       name: "{{ item }}"
+ #       state: latest
+ #     become: yes
+ #     become_user: root
+ #     with_items:
+ #       - xfce4
+ #       - xfce4-goodies
+ #       - tightvncserver
+ #       - dos2unix
 
     - name: Make sure the current version of tightvncserver is installed.
       apt:
@@ -45,15 +54,16 @@
       become: yes
       become_user: root
       with_items:
-        - tightvncserver
-        - dos2unix
+        - "{{ apt-packages }}"
 
     - name: Create Users
       user:
-        name: sysadmin
+        name: "{{ item.user }}"
         comment: "Sysadmin User"
       become: yes
       become_user: root
+      with_items:
+        "{{ Users }}"
 
     - name: Create a .vnc directory if it does not exist
       ansible.builtin.file:
@@ -88,12 +98,12 @@
 #      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
 
     - name: Set VNC Password
-      shell: /usr/local/bin/set_vnc_password.sh "{{ item }}" "{{ keypass }}"
+      shell: /usr/local/bin/set_vnc_password.sh "{{ item.user }}"
       ignore_errors: True
       become: yes
-      become_user: vagrant
+      become_user: "{{ item.user }}"
       with_items:
-        - vagrant
+        "{{ Users }}"
 
 #    - name: Start VNC Server
 #      shell: vncserver
@@ -101,15 +111,15 @@
 #    - name: Stop VNC Server
 #      shell: vncserver  -kill :1
 
-    - name: Update /home/vagrant/.vnc/xstartup
+    - name: Update /home/{{ item.user }}/.vnc/xstartup
       ansible.builtin.copy:
         src: files/xstartup
-        dest: /home/vagrant/.vnc/xstartup
-        group: "{{ item }}"
-        owner: "{{ item }}"
+        dest: /home/{{ item.user }}/.vnc/xstartup
+        group: "{{ item.user }}"
+        owner: "{{ item.user }}"
         mode: 0700
       with_items:
-        - vagrant
+        "{{ Users }}"
 
     - name: Start VNC Server
       shell: vncserver ":{{ item.screen }}"
