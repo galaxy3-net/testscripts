@@ -133,7 +133,7 @@
       ansible.builtin.cron:
         name: "Do updates and restart VNC"
         special_time: reboot
-        job: "sudo bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log"
+        job: "bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log"
 
 #    - name: Send Wall Message MOTD
 #      shell: wall "VNC Installation is Complete"
