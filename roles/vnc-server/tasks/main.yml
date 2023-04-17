@@ -129,6 +129,12 @@
       with_items:
         - "{{ Users }}"
 
+    - name: Setup CROM at Reboot
+      ansible.builtin.cron:
+        name: "Do updates and restart VNC"
+        special_time: reboot
+        job: "sudo bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log"
+
 #    - name: Send Wall Message MOTD
 #      shell: wall "VNC Installation is Complete"
 
