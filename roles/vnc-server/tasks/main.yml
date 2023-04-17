@@ -23,7 +23,7 @@
           - {user: instructor, screen: 2}
           - {user: student, screen: 3}
           - {user: sysadmin, screen: 4}
-        apt-packages:
+        APT_Packages:
           - xfce4
           - xfce4-goodies
           - tightvncserver
@@ -54,7 +54,7 @@
       become: yes
       become_user: root
       with_items:
-        - "{{ apt-packages }}"
+        - "{{ APT_Packages }}"
 
     - name: Create Users
       user:
