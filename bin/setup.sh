@@ -10,4 +10,4 @@ fi
 
 (cd /testscripts && git pull)
 
-sudo bash /testscripts/bin/ansible.sh
+sudo bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log
