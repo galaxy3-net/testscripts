@@ -129,7 +129,7 @@
       with_items:
         - "{{ Users }}"
 
-    - name: Setup CROM at Reboot
+    - name: Setup CRON at Reboot
       ansible.builtin.cron:
         name: "Do updates and restart VNC"
         special_time: reboot
