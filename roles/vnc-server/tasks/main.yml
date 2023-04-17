@@ -54,7 +54,7 @@
       become: yes
       become_user: root
       with_items:
-        - "{{ APT_Packages }}"
+        - ["{{ APT_Packages }}"]
 
     - name: Create Users
       user:
