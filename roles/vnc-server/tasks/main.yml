@@ -85,14 +85,24 @@
 #        owner: vagrant
 #        mode: 0700
 
-    - name: Update set_vnc_passwd.sh
-      ansible.builtin.copy:
-        src: files/set_vnc_password.sh
-        dest: /usr/local/bin/set_vnc_password.sh
-        group: root
-        owner: root
-        mode: 0777
-      become: yes
+    - name: Copy file with owner and permissions
+      copy:
+        src: files/passwd
+        dest: /home/{{ item }}/.vnc/passwd
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      loop:
+        "{{ Users }}"
+
+#    - name: Update set_vnc_passwd.sh
+#      ansible.builtin.copy:
+#        src: files/set_vnc_password.sh
+#        dest: /usr/local/bin/set_vnc_password.sh
+#        group: root
+#        owner: root
+#        mode: 0777
+#      become: yes
 
 #    - name: dos2unix
 #      shell: dos2unix -u /home/vagrant/.vnc/set_vnc_password.sh
