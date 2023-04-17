@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
 
-sudo git clone https://github.com/galaxy3-net/testscripts.git /testscripts/
-sudo chown -R vagrant:vagrant /testscripts/
-cd /testscripts
-git pull
+if [ ! -d /testscripts ]
+then
+  sudo git clone https://github.com/galaxy3-net/testscripts.git /testscripts/
+  sudo chown -R vagrant:vagrant /testscripts/
+fi
 
-. /testscripts/bin/ansible.sh
+(cd /testscripts && git pull)
+
+sudo bash /testscripts/bin/ansible.sh
