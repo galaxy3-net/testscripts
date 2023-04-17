@@ -88,9 +88,9 @@
     - name: Copy file with owner and permissions
       copy:
         src: files/passwd
-        dest: /home/{{ item }}/.vnc/passwd
-        owner: "{{ item }}"
-        group: "{{ item }}"
+        dest: /home/{{ item.user }}/.vnc/passwd
+        owner: "{{ item.user }}"
+        group: "{{ item.user }}"
         mode: '0600'
       loop:
         "{{ Users }}"

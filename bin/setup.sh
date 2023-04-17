@@ -14,3 +14,5 @@ sudo apt update
 sudo apt install -y at
 
 echo "bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log" | at now
+
+echo "Running . . ."
