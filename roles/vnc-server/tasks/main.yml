@@ -134,6 +134,8 @@
         name: "Do updates and restart VNC"
         special_time: reboot
         job: "bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log"
+      become: yes
+      become_user: vagrant
 
 #    - name: Send Wall Message MOTD
 #      shell: wall "VNC Installation is Complete"
