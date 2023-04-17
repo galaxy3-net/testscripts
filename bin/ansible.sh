@@ -3,25 +3,24 @@
 
 function install_ansible ()
 {
+  wall <<_EOD_
+
+    Installing Ansible
+
+    * * * * * * * * * *
+
+_EOD_
   sudo apt-get update
   sudo apt-get upgrade -y
   sudo apt-get install ansible-core -y
+  wall <<_EOD_
+
+    Ansible Installation is Complete
+
+    * * * * * * * * * *
+
+_EOD_
 }
-cat <<_EOD_
-
-  Installing Ansible
-
-  * * * * * * * * * *
-
-_EOD_
-
-wall <<_EOD_
-
-  Installing Ansible
-
-  * * * * * * * * * *
-
-_EOD_
 
 test -e /etc/motd && rm /etc/motd
 
@@ -32,13 +31,21 @@ which ansible-playbook || install_ansible
 
 cd /testscripts/
 
+wall <<_EOD_
+
+  Applying Ansible Playbook
+
+  * * * * * * * * * *
+
+_EOD_
+
 sudo ansible-playbook -i "localhost," -c local playbooks/playbook.yml
 
 #(crontab -l ; echo "@reboot cd /testscripts/ && ansible-playbook -i \"localhost,\" -c local playbooks/playbook.yml | tee -a /tmp/playbook.yml"| crontab -
 
 wall <<_EOD_
 
-  Ansible Installation is Complete
+  Ansible Playbook is Complete
 
   * * * * * * * * * *
 

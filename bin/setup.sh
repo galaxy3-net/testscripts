@@ -10,4 +10,7 @@ fi
 
 (cd /testscripts && git pull)
 
-bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log
+sudo apt update
+sudo apt install -y at
+
+echo "bash /testscripts/bin/ansible.sh | tee -a /tmp/setup.log" | at now
