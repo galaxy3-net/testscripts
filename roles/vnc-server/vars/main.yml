@@ -1,0 +1,22 @@
+---
+# vars file for vnc
+# 
+
+apt:
+  state: latest
+  pkgs_1:
+    - ubuntu-desktop
+    - ubuntu-gnome-desktop
+    - kubuntu-desktop
+  pkgs_2:
+    - lxde
+    - xfce4
+    - xorg
+    - xserver-xorg-core
+    - tigervnc-standalone-server
+    - tigervnc-common
+    - tigervnc-xorg-extension
+    - tigervnc-viewer
+    - screen
+    - expect
+  

@@ -46,6 +46,29 @@
  #       - xfce4-goodies
  #       - tightvncserver
  #       - dos2unix
+    - name: Install Packages Part I
+      apt:
+        pkg: "{{ apt.pkgs_1 }}"
+        autoclean: true
+        autoremove: true
+        cache_valid_time: 86400
+        install_recommends: true
+        update_cache: true
+        state: "{{ apt.state }}"
+        #state: latest
+      become: true
+
+    - name: Install Packages Part II
+      apt:
+        pkg: "{{ apt.pkgs_2 }}"
+        autoclean: true
+        autoremove: true
+        cache_valid_time: 86400
+        install_recommends: true
+        update_cache: true
+        state: "{{ apt.state }}"
+        #state: latest
+      become: true
 
     - name: Make sure the current version of tightvncserver is installed.
       apt:
